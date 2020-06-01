@@ -7,6 +7,7 @@ import { WsRtspCanvas } from './WsRtspCanvas'
 import { StillImage } from './StillImage'
 import { MetadataHandler } from './metadata'
 import { HttpMp4Video } from './HttpMp4Video'
+import { WebRTCVideo } from './WebRTCVideo'
 
 export type PlayerNativeElement =
   | HTMLVideoElement
@@ -26,6 +27,7 @@ export enum Format {
   'RTP_JPEG' = 'RTP_JPEG',
   'JPEG' = 'JPEG',
   'MP4_H264' = 'MP4_H264',
+  'WEBRTC' = 'WEBRTC'
 }
 
 export const FORMAT_API: Record<Format, AxisApi> = {
@@ -289,6 +291,20 @@ export const PlaybackArea: React.FC<PlaybackAreaProps> = ({
         key={refresh}
         forwardedRef={forwardedRef as Ref<HTMLVideoElement>}
         {...{ src, play, onPlaying }}
+      />
+    )
+  }
+  
+  if (format === Format.WEBRTC) {
+    return (
+      <WebRTCVideo
+        key={refresh}
+        forwardedRef={forwardedRef as Ref<HTMLVideoElement>}
+        {...{
+          ws: 'ws://localhost:8080',
+          play,
+          onPlaying,
+        }}
       />
     )
   }
