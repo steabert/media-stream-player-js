@@ -1,5 +1,10 @@
 import React, { Ref } from 'react'
-import { Sdp, pipelines } from 'media-stream-library'
+import {
+  Sdp,
+  Html5VideoPipeline,
+  Html5CanvasPipeline,
+  HttpMsePipeline,
+} from 'media-stream-library'
 import debug from 'debug'
 
 import { WsRtspVideo } from './WsRtspVideo'
@@ -12,6 +17,11 @@ export type PlayerNativeElement =
   | HTMLVideoElement
   | HTMLCanvasElement
   | HTMLImageElement
+
+export type PlayerPipeline =
+  | Html5VideoPipeline
+  | Html5CanvasPipeline
+  | HttpMsePipeline
 
 const debugLog = debug('msp:api')
 
@@ -39,16 +49,19 @@ export interface VapixParameters {
   readonly [key: string]: string
 }
 
+export type Range = readonly [number | undefined, number | undefined]
+
 export interface VideoProperties {
   readonly el: PlayerNativeElement
   readonly width: number
   readonly height: number
-  readonly pipeline?: pipelines.Html5VideoPipeline
+  readonly pipeline?: PlayerPipeline
   readonly media?: ReadonlyArray<{
     readonly type: 'video' | 'audio' | 'data'
     readonly mime: string
   }>
   readonly volume?: number
+  readonly range?: Range
 }
 
 interface PlaybackAreaProps {
@@ -57,6 +70,7 @@ interface PlaybackAreaProps {
   readonly format: Format
   readonly parameters?: VapixParameters
   readonly play?: boolean
+  readonly offset?: number // 18s from the start
   readonly refresh: number
   readonly onPlaying: (properties: VideoProperties) => void
   readonly onSdp?: (msg: Sdp) => void
@@ -198,6 +212,7 @@ export const PlaybackArea: React.FC<PlaybackAreaProps> = ({
   format,
   parameters = {},
   play,
+  offset,
   refresh,
   onPlaying,
   onSdp,
@@ -225,6 +240,7 @@ export const PlaybackArea: React.FC<PlaybackAreaProps> = ({
           ws,
           rtsp,
           play,
+          offset,
           onPlaying,
           onSdp,
           metadataHandler,
@@ -248,7 +264,7 @@ export const PlaybackArea: React.FC<PlaybackAreaProps> = ({
       <WsRtspCanvas
         key={refresh}
         forwardedRef={forwardedRef as Ref<HTMLCanvasElement>}
-        {...{ ws, rtsp, play, onPlaying }}
+        {...{ ws, rtsp, play, offset, onPlaying }}
       />
     )
   }

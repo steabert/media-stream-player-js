@@ -42,6 +42,9 @@ interface PlayerProps {
   readonly secure?: boolean
   readonly aspectRatio?: number
   readonly className?: string
+  // support for recordings
+  readonly startTime?: string // 2021-02-03T12:21:57.465715Z
+  readonly duration?: number
 }
 
 export const Player = forwardRef<PlayerNativeElement, PlayerProps>(
@@ -59,6 +62,7 @@ export const Player = forwardRef<PlayerNativeElement, PlayerProps>(
     ref,
   ) => {
     const [play, setPlay] = useState(autoPlay)
+    const [offset, setOffset] = useState(0)
     const [refresh, setRefresh] = useState(0)
     const [host, setHost] = useState(hostname)
     const [waiting, setWaiting] = useState(autoPlay)
@@ -252,6 +256,7 @@ export const Player = forwardRef<PlayerNativeElement, PlayerProps>(
                 forwardedRef={ref}
                 refresh={refresh}
                 play={play}
+                offset={offset}
                 host={host}
                 format={format}
                 parameters={parameters}
@@ -267,6 +272,7 @@ export const Player = forwardRef<PlayerNativeElement, PlayerProps>(
             <Layer>
               <Controls
                 play={play}
+                videoProperties={videoProperties}
                 src={host}
                 parameters={parameters}
                 onPlay={onPlayPause}
@@ -275,6 +281,7 @@ export const Player = forwardRef<PlayerNativeElement, PlayerProps>(
                 onScreenshot={onScreenshot}
                 onFormat={setFormat}
                 onVapix={onVapix}
+                onSeek={setOffset}
                 labels={{
                   play: 'Play',
                   pause: 'Pause',

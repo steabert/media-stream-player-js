@@ -2474,6 +2474,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/luxon@npm:1.25.1":
+  version: 1.25.1
+  resolution: "@types/luxon@npm:1.25.1"
+  checksum: 5767c3d4b1756494c30ca548468a497090daec938bb66628183971c76e6d35dc97a458374434d97c8ca12cf7af30241a8c487a55538b8342543b0602863a4563
+  languageName: node
+  linkType: hard
+
 "@types/mdast@npm:^3.0.0":
   version: 3.0.3
   resolution: "@types/mdast@npm:3.0.3"
@@ -8399,6 +8406,13 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
+"luxon@npm:1.25.0":
+  version: 1.25.0
+  resolution: "luxon@npm:1.25.0"
+  checksum: 3f0d64355beab707f5e8eb4e2d7e1cad90569c2a4c4dce440e0b4be4eb6833ec1a83513a4210361cd4dc5a266c0221718a9afd15f7cde3002d8fa1d0976b9e50
+  languageName: node
+  linkType: hard
+
 "make-dir@npm:^2.1.0":
   version: 2.1.0
   resolution: "make-dir@npm:2.1.0"
@@ -8555,6 +8569,7 @@ fsevents@~2.3.1:
     "@juggle/resize-observer": 3.2.0
     "@types/debug": 4.1.5
     "@types/jest": 26.0.20
+    "@types/luxon": 1.25.1
     "@types/react": 17.0.0
     "@types/react-dom": 17.0.0
     "@types/styled-components": 5.1.7
@@ -8574,6 +8589,7 @@ fsevents@~2.3.1:
     file-loader: 6.2.0
     html-webpack-plugin: 4.5.1
     jest: 26.6.3
+    luxon: 1.25.0
     media-stream-library: 9.1.0
     prettier: 2.2.1
     react: 17.0.1
@@ -8590,6 +8606,7 @@ fsevents@~2.3.1:
     webpack-cli: 4.3.1
     webpack-dev-server: 3.11.1
   peerDependencies:
+    luxon: 1.25.0
     react: 17.0.1
     react-dom: 17.0.1
     styled-components: 5.2.0
